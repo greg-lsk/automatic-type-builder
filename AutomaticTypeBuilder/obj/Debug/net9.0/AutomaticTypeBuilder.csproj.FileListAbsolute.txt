@@ -1,0 +1,12 @@
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\bin\Debug\net9.0\AutomaticTypeBuilder.deps.json
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\bin\Debug\net9.0\AutomaticTypeBuilder.dll
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\bin\Debug\net9.0\AutomaticTypeBuilder.pdb
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.AssemblyInfoInputs.cache
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.AssemblyInfo.cs
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.csproj.CoreCompileInputs.cache
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.sourcelink.json
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.dll
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\refint\AutomaticTypeBuilder.dll
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\AutomaticTypeBuilder.pdb
+c:\Users\GregL\Documents\Coding\automatic-type-builder\AutomaticTypeBuilder\obj\Debug\net9.0\ref\AutomaticTypeBuilder.dll
