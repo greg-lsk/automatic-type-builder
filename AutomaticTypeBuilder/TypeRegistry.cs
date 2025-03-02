@@ -12,11 +12,11 @@ internal class TypeRegistry: ITypeRegistry
 
     public TypeRegistry(IFieldAssignmentLogic assignmentLogic, int fieldCount = 5)
     {
-        assignmentLogic.Initialize(out _values, out _types, fieldCount);
+        assignmentLogic.Initialize(fieldCount, out _values, out _types);
     }
 
 
     public int Count => _types.Count();
-    
+
     public (Type Type, object Value) InfoAt(int index) => (_types.ElementAt(index), _values.ElementAt(index));
 }
