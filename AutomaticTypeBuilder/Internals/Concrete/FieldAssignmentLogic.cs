@@ -16,6 +16,8 @@ internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogi
 
     public IFieldAssignmentLogic When<T>(Func<T> initialize)
     {
+        if (_customLogic.ContainsKey(typeof(T))) return this;
+
         _customLogic.Add(typeof(T), initialize);
         return this;
     }
