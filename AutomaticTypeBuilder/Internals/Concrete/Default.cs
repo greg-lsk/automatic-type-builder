@@ -1,14 +1,14 @@
 using System.Collections.ObjectModel;
+using AutomaticTypeBuilder.Internals.Abstract;
 
-namespace AutomaticTypeBuilder.Internals;
+namespace AutomaticTypeBuilder.Internals.Concrete;
 
 
-internal static class PrebuiltData
+internal class Default : IDefault
 {
+   public ReadOnlyDictionary<Type, Delegate> AssignmentLogic => new(_assignmentLogic);
+    
     private static readonly Random _random = new();
-
-    internal readonly static ReadOnlyDictionary<Type, Delegate> AssignmentLogic = new(_assignmentLogic);
-
     private readonly static Dictionary<Type, Delegate> _assignmentLogic = new()
     {
         [typeof(int)] = () => _random.Next(),

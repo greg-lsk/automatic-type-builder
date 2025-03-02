@@ -1,14 +1,17 @@
 using System.Collections.ObjectModel;
+using AutomaticTypeBuilder.Internals.Abstract;
 
-namespace AutomaticTypeBuilder.Internals;
+namespace AutomaticTypeBuilder.Internals.Concrete;
 
 
-internal class FieldAssignmentLogic : IFieldAssignmentLogic
+internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogic
 {
+    private readonly IDefault _default = defaultData;
+
     private readonly Dictionary<Type, Delegate> _customLogic = [];
-    private readonly ReadOnlyDictionary<Type, Delegate> _prebuildLogic = PrebuiltData.AssignmentLogic;
-    
-    private IReadOnlyCollection<Type> RegisteredTypes => [.. _customLogic.Keys.Concat(_prebuildLogic.Keys).Distinct()];
+
+    private ReadOnlyDictionary<Type, Delegate> DefaultLogic => _default.AssignmentLogic;
+    private IReadOnlyCollection<Type> RegisteredTypes => [.. _customLogic.Keys.Concat(DefaultLogic.Keys).Distinct()];
 
 
     public IFieldAssignmentLogic When<T>(Func<T> initialize)
@@ -17,12 +20,13 @@ internal class FieldAssignmentLogic : IFieldAssignmentLogic
         return this;
     }
 
+
     public T? Initialize<T>()
     {
         _customLogic.TryGetValue(typeof(T), out var initialization);
         if (initialization is Func<T> customInitialization) return customInitialization();
 
-        _prebuildLogic.TryGetValue(typeof(T), out initialization);
+        DefaultLogic.TryGetValue(typeof(T), out initialization);
         return initialization is Func<T> prebuiltInitialization ? prebuiltInitialization() : default;
     }
 

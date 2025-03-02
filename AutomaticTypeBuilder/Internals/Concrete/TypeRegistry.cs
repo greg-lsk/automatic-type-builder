@@ -1,4 +1,4 @@
-namespace AutomaticTypeBuilder;
+namespace AutomaticTypeBuilder.Internals.Concrete;
 
 
 internal class TypeRegistry: ITypeRegistry
