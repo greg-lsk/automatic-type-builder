@@ -43,8 +43,11 @@ internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogi
 
     public void Initialize(int fieldLimit, out IEnumerable<object?> values, out IEnumerable<Type> types)
     {
+        if(fieldLimit < 0) throw new InvalidDataException("fieldLimit must be greater than zero");
+        
         var random = new Random();
-        types = [..RegisteredTypes.OrderBy(x => random.Next()).Take(fieldLimit)];
+        types = Enumerable.Range(0, fieldLimit)
+                          .Select( _ => RegisteredTypes.ElementAt(random.Next(RegisteredTypes.Count)));
         Initialize(in types, out values);        
     }
 }
