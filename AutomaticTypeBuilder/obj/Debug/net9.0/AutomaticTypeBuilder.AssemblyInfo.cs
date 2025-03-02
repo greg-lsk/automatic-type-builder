@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("AutomaticTypeBuilder.Tests")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4f14912e70baae6ce1798dc5ef2b45353db0446")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e3b6c3a57bf7bbffa28dc2580dd8249b99b3cef")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
