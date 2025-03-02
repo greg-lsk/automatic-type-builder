@@ -6,7 +6,7 @@ namespace AutomaticTypeBuilder.Internals.Concrete;
 
 internal class Default : IDefault
 {
-   public ReadOnlyDictionary<Type, Delegate> AssignmentLogic => new(_assignmentLogic);
+    public ReadOnlyDictionary<Type, Delegate> AssignmentLogic => new(_assignmentLogic);
     
     private static readonly Random _random = new();
     private readonly static Dictionary<Type, Delegate> _assignmentLogic = new()
