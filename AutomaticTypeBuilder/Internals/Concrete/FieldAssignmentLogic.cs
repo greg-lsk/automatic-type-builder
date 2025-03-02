@@ -37,7 +37,8 @@ internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogi
         var method = typeof(FieldAssignmentLogic).GetMethod(nameof(Initialize), Type.EmptyTypes)
                                                  ?.MakeGenericMethod(type);
 
-        return method?.Invoke(this, null) ?? throw new InvalidOperationException("Tried to invoke a nonexistent method");
+        return method is not null ? method.Invoke(this, null) 
+                                  : throw new InvalidOperationException("Tried to invoke a nonexistent method");
     });
 
     public void Initialize(int fieldLimit, out IEnumerable<object> values, out IEnumerable<Type> types)
