@@ -32,7 +32,7 @@ internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogi
         return initialization is Func<T> prebuiltInitialization ? prebuiltInitialization() : default;
     }
 
-    public void Initialize(in IEnumerable<Type> types, out IEnumerable<object> values) => values = types.Select(type =>
+    public void Initialize(in IEnumerable<Type> types, out IEnumerable<object?> values) => values = types.Select(type =>
     {
         var method = typeof(FieldAssignmentLogic).GetMethod(nameof(Initialize), Type.EmptyTypes)
                                                  ?.MakeGenericMethod(type);
@@ -41,7 +41,7 @@ internal class FieldAssignmentLogic(IDefault defaultData) : IFieldAssignmentLogi
                                   : throw new InvalidOperationException("Tried to invoke a nonexistent method");
     });
 
-    public void Initialize(int fieldLimit, out IEnumerable<object> values, out IEnumerable<Type> types)
+    public void Initialize(int fieldLimit, out IEnumerable<object?> values, out IEnumerable<Type> types)
     {
         var random = new Random();
         types = [..RegisteredTypes.OrderBy(x => random.Next()).Take(fieldLimit)];
