@@ -1,7 +1,7 @@
 namespace AutomaticTypeBuilder.Internals.Concrete;
 
 
-internal class TypeRegistry: ITypeRegistry
+internal class InstantiationData: IInstantiationData
 {
     private readonly IEnumerable<Type> _types;
     private readonly IEnumerable<object?> _values;
@@ -10,13 +10,13 @@ internal class TypeRegistry: ITypeRegistry
     public IEnumerable<object?> Values => _values;
 
 
-    public TypeRegistry(IFieldAssignmentLogic assignmentLogic, int fieldCount = 5)
+    public InstantiationData(IFieldAssignmentLogic assignmentLogic, int fieldCount = 5)
     {
         assignmentLogic.Initialize(fieldCount, out _values, out _types);
     }
 
 
-    public int Count => _types.Count();
+    public int FieldCount => _types.Count();
 
-    public (Type Type, object? Value) InfoAt(int index) => (_types.ElementAt(index), _values.ElementAt(index));
+    public (Type Type, object? Value) DataAt(int index) => (_types.ElementAt(index), _values.ElementAt(index));
 }

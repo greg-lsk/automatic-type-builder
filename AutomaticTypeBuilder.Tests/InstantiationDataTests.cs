@@ -1,6 +1,6 @@
 namespace AutomaticTypeBuilder.Tests;
 
-public class TypeRegistryTests
+public class InstantiationDataTests
 {
 
 }

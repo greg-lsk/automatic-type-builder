@@ -1,12 +1,12 @@
 namespace AutomaticTypeBuilder;
 
 
-public interface ITypeRegistry
+public interface IInstantiationData
 {
-    public int Count { get; }
+    public int FieldCount { get; }
 
     public IEnumerable<Type> Types {get;}
     public IEnumerable<object?> Values {get;}
     
-    public (Type Type, object? Value) InfoAt(int index);
+    public (Type Type, object? Value) DataAt(int index);
 }
