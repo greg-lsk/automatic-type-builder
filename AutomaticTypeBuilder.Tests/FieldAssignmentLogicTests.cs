@@ -79,7 +79,7 @@ public class FieldAssignmentLogicTests
     }
 
     [Theory]
-    [MemberData(nameof(AssignedValues))]    
+    [MemberData(nameof(ExpectedValuesMap))]    
     public void Initialize_Correctly_FillsTheValues_ToCollection(
         IEnumerable<Type> providedTypes, 
         IEnumerable<object?> expectedValues)
@@ -90,17 +90,7 @@ public class FieldAssignmentLogicTests
 
         Assert.Equal(expected:expectedValues, actual:values);        
     }
-    public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> AssignedValues = new()
-    {
-        {
-            [typeof(int), typeof(string), typeof(Guid)],
-            [_mockedAssignedInt, _mockedAssignedString, default(Guid)]
-        },
-        {
-            [typeof(int), typeof(string), typeof(Guid), typeof(FieldAssignmentLogic)],
-            [_mockedAssignedInt, _mockedAssignedString, default(Guid), default(FieldAssignmentLogic)]
-        }      
-    }; 
+
   
 
     private static void DefaultAssignmentLogicSetup(out Mock<IDefault> defaultMock,
@@ -119,5 +109,17 @@ public class FieldAssignmentLogicTests
             {typeof(int), () => _mockedAssignedInt},
             {typeof(string), () => _mockedAssignedString},
         }
-    )); 
+    ));
+
+    public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedValuesMap = new()
+    {
+        {
+            [typeof(int), typeof(string), typeof(Guid)],
+            [_mockedAssignedInt, _mockedAssignedString, default(Guid)]
+        },
+        {
+            [typeof(int), typeof(string), typeof(Guid), typeof(FieldAssignmentLogic)],
+            [_mockedAssignedInt, _mockedAssignedString, default(Guid), default(FieldAssignmentLogic)]
+        }      
+    };      
 }
