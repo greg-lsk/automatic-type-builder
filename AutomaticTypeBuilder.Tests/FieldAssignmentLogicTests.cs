@@ -68,6 +68,39 @@ public class FieldAssignmentLogicTests
         Assert.Equal(expected:_mockedAssignedString, actual:actualStringValue);        
     }
 
+    [Fact]    
+    public void Initialize_Returns_DefaultValue_For_UnregistedType()
+    {
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+
+        var actualGuidValue = assignmentLogic.Initialize<Guid>();
+
+        Assert.Equal(expected:default, actual:actualGuidValue);        
+    }
+
+    [Theory]
+    [MemberData(nameof(AssignedValues))]    
+    public void Initialize_Correctly_FillsTheValues_ToCollection(
+        IEnumerable<Type> providedTypes, 
+        IEnumerable<object?> expectedValues)
+    {
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+
+        assignmentLogic.Initialize(in providedTypes, out var values);
+
+        Assert.Equal(expected:expectedValues, actual:values);        
+    }
+    public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> AssignedValues = new()
+    {
+        {
+            [typeof(int), typeof(string), typeof(Guid)],
+            [_mockedAssignedInt, _mockedAssignedString, default(Guid)]
+        },
+        {
+            [typeof(int), typeof(string), typeof(Guid), typeof(FieldAssignmentLogic)],
+            [_mockedAssignedInt, _mockedAssignedString, default(Guid), default(FieldAssignmentLogic)]
+        }      
+    }; 
   
 
     private static void DefaultAssignmentLogicSetup(out Mock<IDefault> defaultMock,
