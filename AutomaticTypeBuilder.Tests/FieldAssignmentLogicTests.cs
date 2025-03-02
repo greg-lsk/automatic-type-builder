@@ -80,9 +80,8 @@ public class FieldAssignmentLogicTests
 
     [Theory]
     [MemberData(nameof(ExpectedValuesMap))]    
-    public void Initialize_Correctly_FillsTheValues_ToCollection(
-        IEnumerable<Type> providedTypes, 
-        IEnumerable<object?> expectedValues)
+    public void InitializeCorrectlyFillsTheValuesToCollection(IEnumerable<Type> providedTypes,
+                                                              IEnumerable<object?> expectedValues)
     {
         DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
 
