@@ -90,6 +90,45 @@ public class FieldAssignmentLogicTests
         Assert.Equal(expected:expectedValues, actual:values);        
     }
 
+    [Fact]
+    public void Initialize_Correctly_Sets_TheFieldNumber()
+    {
+        var fieldLimit = 5;
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+
+        assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
+        var actualTypesCount = actualTypes.Count();
+        var actualValuesCount = actualValues.Count();
+        
+        Assert.Equal(expected:fieldLimit, actual: actualTypesCount);
+        Assert.Equal(expected:fieldLimit, actual: actualValuesCount);        
+    }
+
+    [Fact]
+    public void Initialize_OnlySetsTypes_FromRegistered()
+    {
+        var fieldLimit = 5;
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        IEnumerable<Type> registeredTypes = [typeof(int), typeof(string), typeof(Guid)];  
+    
+        assignmentLogic.When(Guid.NewGuid);
+        assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
+
+        Assert.All(actualTypes, t => Assert.Contains(t, registeredTypes));                           
+    }
+
+    [Fact]
+    public void Initialize_SetsValues_OfCorrectTypes()
+    {
+        var fieldLimit = 5;
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        IEnumerable<Type> registeredTypes = [typeof(int), typeof(string), typeof(Guid)];  
+    
+        assignmentLogic.When(Guid.NewGuid);
+        assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
+
+        Assert.All(actualValues, v => Assert.Contains(v.GetType(), registeredTypes));                           
+    }
   
 
     private static void DefaultAssignmentLogicSetup(out Mock<IDefault> defaultMock,

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0fdbd46c5326a55495c7f27b8944e97cc4c49ba7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c58bf79e8e938aab42afc1d38a285399502a0ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutomaticTypeBuilder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
