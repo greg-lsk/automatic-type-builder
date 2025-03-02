@@ -129,6 +129,17 @@ public class FieldAssignmentLogicTests
 
         Assert.All(actualValues, v => Assert.Contains(v.GetType(), registeredTypes));                           
     }
+
+    [Fact]
+    public void Initialize_ThrowsInvalidDataException_WithNegativeFieldCount()
+    {
+        var fieldLimit = -5;
+        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+    
+        void act() => assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
+
+        Assert.Throws<InvalidDataException>(act);                           
+    }    
   
 
     private static void DefaultAssignmentLogicSetup(out Mock<IDefault> defaultMock,
