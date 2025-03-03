@@ -36,25 +36,25 @@ public static class TestData
     (
         new Dictionary<Type, Delegate>
         {
-            {typeof(int), () => Constant.IntValue},
-            {typeof(string), () => Constant.StringValue}
+            {typeof(int), () => Defaults.IntValue},
+            {typeof(string), () => Defaults.StringValue}
         }
     );
     public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedAssignedValuesMap = new()
     {
         {
             [typeof(int), typeof(string), typeof(Guid)],
-            [Constant.IntValue, Constant.StringValue, default(Guid)]
+            [Defaults.IntValue, Defaults.StringValue, default(Guid)]
         },
         {
             [typeof(int), typeof(string), typeof(Guid), typeof(DummyClass)],
-            [Constant.IntValue, Constant.StringValue, default(Guid), default(DummyClass)]
+            [Defaults.IntValue, Defaults.StringValue, default(Guid), default(DummyClass)]
         }      
     };
 
     public static int InitializationDataCount => 2;
     public static IEnumerable<Type> InitializationTypes = [typeof(int), typeof(string)];
-    public static IEnumerable<object?> InitializationValues = [Constant.IntValue, Constant.StringValue];         
+    public static IEnumerable<object?> InitializationValues = [Defaults.IntValue, Defaults.StringValue];         
     public static TheoryData<int, Type, object?> InitializationDataAtIndex = new()
     {
         {0, InitializationTypes.ElementAt(0), InitializationValues.ElementAt(0)},
