@@ -10,8 +10,6 @@ public class Instantiation : IInstantiation
         var instanceFieldTypes = instantiationData.Types.ToArray();
         var instanceFieldValues = instantiationData.Values.ToArray();
 
-        var instanceParam = Expression.Variable(typeof(T), "instance");
-
         var constructor = typeof(T).GetConstructor(instanceFieldTypes) 
                         ?? throw new InvalidOperationException($"Could not get constructor info for Type:{typeof(T).Name}");
 
@@ -22,10 +20,8 @@ public class Instantiation : IInstantiation
         }
    
         var newExpression = Expression.New(constructor, construstorArgs);
-        var assignInstance = Expression.Assign(instanceParam, newExpression);
 
-        var block = Expression.Block([instanceParam], assignInstance, instanceParam);
-        var compiledLambda = Expression.Lambda<Instantiate<T>>(block).Compile();
+        var compiledLambda = Expression.Lambda<Instantiate<T>>(newExpression).Compile();
 
         return compiledLambda;                         
     }
