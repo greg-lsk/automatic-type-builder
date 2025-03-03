@@ -13,7 +13,7 @@ public class InstantiationTests
     public void For_Returns_TheCorrect_Delegate()
     {
         InstantiationDataMock(out var instantionDataMock);
-        InstantiationDataMockCollectionsSetup(in instantionDataMock);
+        InstantiationDataMockCollectionsSetup<InstantiationTestDummyClass>(in instantionDataMock);
         var instantiation = new Instantiation();
 
         var del = instantiation.For<InstantiationTestDummyClass>(instantionDataMock.Object);   
@@ -22,10 +22,10 @@ public class InstantiationTests
     }
 
     [Fact]
-    public void For_ReturnedDelegate_Executes_Correctly()
+    public void For_ReturnedDelegate_Executes_Correctly_ForClasses()
     {
         InstantiationDataMock(out var instantionDataMock);
-        InstantiationDataMockCollectionsSetup(in instantionDataMock);
+        InstantiationDataMockCollectionsSetup<InstantiationTestDummyClass>(in instantionDataMock);
         var instantiation = new Instantiation();
 
         var del = instantiation.For<InstantiationTestDummyClass>(instantionDataMock.Object);
@@ -36,15 +36,38 @@ public class InstantiationTests
         Assert.Equal(expected: InstantiationTestsData.DummyClassAssignedValues, actual:actualValues); 
     }    
 
+    [Fact]
+    public void For_ReturnedDelegate_Executes_Correctly_ForImmutableStructs()
+    {
+        InstantiationDataMock(out var instantionDataMock);
+        InstantiationDataMockCollectionsSetup<InstantiationTestDummyStruct>(in instantionDataMock);
+        var instantiation = new Instantiation();
+
+        var del = instantiation.For<InstantiationTestDummyStruct>(instantionDataMock.Object);
+        var delegateResult = del();
+           
+        object?[] actualValues = [delegateResult.Field01, delegateResult.Field02, delegateResult.Field03];
+
+        Assert.Equal(expected: InstantiationTestsData.DummyStructAssignedValues, actual:actualValues); 
+    } 
+
 
     private static void InstantiationDataMock(out Mock<IInstantiationData> instantionDataMock)
     {
         instantionDataMock = new();
     }
 
-    private static void InstantiationDataMockCollectionsSetup(in Mock<IInstantiationData> instantionDataMock)
+    private static void InstantiationDataMockCollectionsSetup<T>(in Mock<IInstantiationData> instantionDataMock)
     {
-        instantionDataMock.Setup(m => m.Values).Returns(InstantiationTestsData.DummyClassAssignedValues);
-        instantionDataMock.Setup(m => m.Types).Returns(InstantiationTestsData.DummyClassFieldTypes);
+        if(typeof(T) == typeof(InstantiationTestDummyClass))
+        {
+            instantionDataMock.Setup(m => m.Values).Returns(InstantiationTestsData.DummyClassAssignedValues);
+            instantionDataMock.Setup(m => m.Types).Returns(InstantiationTestsData.DummyClassFieldTypes);
+        }
+        else if(typeof(T) == typeof(InstantiationTestDummyStruct))
+        {
+            instantionDataMock.Setup(m => m.Values).Returns(InstantiationTestsData.DummyStructAssignedValues);
+            instantionDataMock.Setup(m => m.Types).Returns(InstantiationTestsData.DummyStructFieldTypes);
+        }
     }
 }
