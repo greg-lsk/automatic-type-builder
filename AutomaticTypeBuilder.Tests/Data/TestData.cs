@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using AutomaticTypeBuilder.Tests.Data.Dummy;
 
 namespace AutomaticTypeBuilder.Tests.Data;
@@ -30,6 +31,15 @@ public static class TestData
         [typeof(DateTime), typeof(Func<DateTime>)]
     ];
 
+
+    public static ReadOnlyDictionary<Type, Delegate> DefaultAssignmentLogic => new
+    (
+        new Dictionary<Type, Delegate>
+        {
+            {typeof(int), () => Constant.IntValue},
+            {typeof(string), () => Constant.StringValue}
+        }
+    );
     public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedAssignedValuesMap = new()
     {
         {
