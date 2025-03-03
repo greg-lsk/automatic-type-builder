@@ -6,7 +6,7 @@ namespace AutomaticTypeBuilder.Tests;
 
 public class DefaultTests
 {
-    public static IEnumerable<object[]> TypeToFuncMap => TestData.TypeToFuncMap;
+    public static IEnumerable<object[]> TypeToFuncMap => DefaultTestsData.TypeToFuncMap;
 
 
     [Theory]

@@ -1,16 +1,18 @@
-using AutomaticTypeBuilder.Internals.Concrete;
-using AutomaticTypeBuilder.Tests.Data;
 using Moq;
+using AutomaticTypeBuilder.Tests.Data;
+using AutomaticTypeBuilder.Internals.Concrete;
 
 namespace AutomaticTypeBuilder.Tests;
 
 
 public class InstantiationDataTests
 {
-    private static readonly int _expectedFieldCount = TestData.InitializationDataCount; 
-    private static IEnumerable<Type> _expectedInitializedTypes = TestData.InitializationTypes;
-    private static IEnumerable<object?> _expectedInitializedValues = TestData.InitializationValues;
-    public static TheoryData<int, Type, object?> InitializationDataAtIndex => TestData.InitializationDataAtIndex;
+    private static readonly int _expectedFieldCount = InstantiationDataTestsData.FieldCount; 
+    private static IEnumerable<Type> _expectedInitializedTypes = InstantiationDataTestsData.FieldTypes;
+    private static IEnumerable<object?> _expectedInitializedValues = InstantiationDataTestsData.AssignedValues;
+    
+    public static TheoryData<int, Type, object?> InitializationDataAtIndex 
+    => InstantiationDataTestsData.InitializationDataAtIndex;
 
 
     [Fact]

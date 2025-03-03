@@ -1,4 +1,5 @@
 using Moq;
+using System.Collections.ObjectModel;
 using AutomaticTypeBuilder.Tests.Data;
 using AutomaticTypeBuilder.Internals.Abstract;
 using AutomaticTypeBuilder.Internals.Concrete;
@@ -8,8 +9,11 @@ namespace AutomaticTypeBuilder.Tests;
 
 public class FieldAssignmentLogicTests
 {
+    public static ReadOnlyDictionary<Type, Delegate> DefaultAssignmentLogic 
+    => FieldAssignmentLogicTestsData.DefaultLogic;
+    
     public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedAssignedValuesMap 
-    => TestData.ExpectedAssignedValuesMap;
+    => FieldAssignmentLogicTestsData.ExpectedAssignedValues_OnDefaultLogic;
 
 
     [Fact]
@@ -164,7 +168,7 @@ public class FieldAssignmentLogicTests
     private static void DefaultAssignmentLogicSetup(in Mock<IDefault> defaultMock,
                                                     out IFieldAssignmentLogic defaultAssignmentLogic)
     {
-        defaultMock.Setup(m => m.AssignmentLogic).Returns(TestData.DefaultAssignmentLogic);
+        defaultMock.Setup(m => m.AssignmentLogic).Returns(DefaultAssignmentLogic);
         defaultAssignmentLogic = new FieldAssignmentLogic(defaultMock.Object);
     }   
 }
