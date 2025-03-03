@@ -1,5 +1,6 @@
 using Moq;
 using System.Collections.ObjectModel;
+using AutomaticTypeBuilder.Tests.Data;
 using AutomaticTypeBuilder.Internals.Abstract;
 using AutomaticTypeBuilder.Internals.Concrete;
 
@@ -8,8 +9,8 @@ namespace AutomaticTypeBuilder.Tests;
 
 public class FieldAssignmentLogicTests
 {
-    private static readonly int _mockedAssignedInt = 42;
-    private static readonly string _mockedAssignedString = "Hellow";
+    public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedAssignedValuesMap 
+    => TestData.ExpectedAssignedValuesMap;
 
 
     [Fact]
@@ -64,8 +65,8 @@ public class FieldAssignmentLogicTests
         var actualIntValue = assignmentLogic.Initialize<int>();
         var actualStringValue = assignmentLogic.Initialize<string>();
 
-        Assert.Equal(expected:_mockedAssignedInt, actual:actualIntValue);
-        Assert.Equal(expected:_mockedAssignedString, actual:actualStringValue);        
+        Assert.Equal(expected:Constant.IntValue, actual:actualIntValue);
+        Assert.Equal(expected:Constant.StringValue, actual:actualStringValue);        
     }
 
     [Fact]    
@@ -79,7 +80,7 @@ public class FieldAssignmentLogicTests
     }
 
     [Theory]
-    [MemberData(nameof(ExpectedValuesMap))]    
+    [MemberData(nameof(ExpectedAssignedValuesMap))]    
     public void InitializeCorrectlyFillsTheValuesToCollection(IEnumerable<Type> providedTypes,
                                                               IEnumerable<object?> expectedValues)
     {
@@ -155,20 +156,8 @@ public class FieldAssignmentLogicTests
     (
         new Dictionary<Type, Delegate>
         {
-            {typeof(int), () => _mockedAssignedInt},
-            {typeof(string), () => _mockedAssignedString},
+            {typeof(int), () => Constant.IntValue},
+            {typeof(string), () => Constant.StringValue},
         }
-    ));
-
-    public static TheoryData<IEnumerable<Type>, IEnumerable<object?>> ExpectedValuesMap = new()
-    {
-        {
-            [typeof(int), typeof(string), typeof(Guid)],
-            [_mockedAssignedInt, _mockedAssignedString, default(Guid)]
-        },
-        {
-            [typeof(int), typeof(string), typeof(Guid), typeof(FieldAssignmentLogic)],
-            [_mockedAssignedInt, _mockedAssignedString, default(Guid), default(FieldAssignmentLogic)]
-        }      
-    };      
+    ));    
 }

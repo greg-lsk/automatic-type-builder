@@ -1,4 +1,5 @@
 using AutomaticTypeBuilder.Internals.Concrete;
+using AutomaticTypeBuilder.Tests.Data;
 using Moq;
 
 namespace AutomaticTypeBuilder.Tests;
@@ -6,10 +7,10 @@ namespace AutomaticTypeBuilder.Tests;
 
 public class InstantiationDataTests
 {
-    private static readonly int _mockFieldCount = 2; 
-    
-    private static IEnumerable<Type> _mockedTypes = [typeof(int), typeof(string)];
-    private static IEnumerable<object?> _mockedValues = [42, "Hellow"];
+    private static readonly int _mockFieldCount = TestData.InitializationDataCount; 
+    private static IEnumerable<Type> _mockedTypes = TestData.InitializationTypes;
+    private static IEnumerable<object?> _mockedValues = TestData.InitializationValues;
+    public static TheoryData<int, Type, object?> InitializationDataAtIndex => TestData.InitializationDataAtIndex;
 
 
     [Fact]
@@ -49,7 +50,7 @@ public class InstantiationDataTests
     }
 
     [Theory]
-    [MemberData(nameof(DataAtIndex))]
+    [MemberData(nameof(InitializationDataAtIndex))]
     public void DataAt_Correctly_Returts_FieldInfo_FromIndex(int index, Type expectedType, object? expectedValue)
     {
         MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
@@ -95,10 +96,4 @@ public class InstantiationDataTests
                                 providedTypes = _mockedTypes;                                
                              });
     }
-
-    public static TheoryData<int, Type, object?> DataAtIndex = new()
-    {
-        {0, _mockedTypes.ElementAt(0), _mockedValues.ElementAt(0)},
-        {1, _mockedTypes.ElementAt(1), _mockedValues.ElementAt(1)}
-    };
 }

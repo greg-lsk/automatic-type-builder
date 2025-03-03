@@ -1,13 +1,16 @@
-using AutomaticTypeBuilder.Internals.Concrete;
 using AutomaticTypeBuilder.Tests.Data;
+using AutomaticTypeBuilder.Internals.Concrete;
 
 namespace AutomaticTypeBuilder.Tests;
 
 
 public class DefaultTests
 {
+    public static IEnumerable<object[]> TypeToFuncMap => TestData.TypeToFuncMap;
+
+
     [Theory]
-    [MemberData(nameof(Data.Data.TypeToFuncMap))]       
+    [MemberData(nameof(TypeToFuncMap))]       
     public void AssignmentLogic_Returns_CorrectDelegates(Type key, Type expectedType)
     {
         var _defaultInitLogic = new Default().AssignmentLogic;
@@ -22,6 +25,6 @@ public class DefaultTests
     {
         var defaultInitLogic = new Default().AssignmentLogic;
 
-        Assert.Equal(expected:defaultInitLogic.Count, actual:InitLogicMap.Count());
+        Assert.Equal(expected:defaultInitLogic.Count, actual:TypeToFuncMap.Count());
     }
 }
