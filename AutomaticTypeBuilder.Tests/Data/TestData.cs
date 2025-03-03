@@ -3,7 +3,7 @@ using AutomaticTypeBuilder.Tests.Data.Dummy;
 namespace AutomaticTypeBuilder.Tests.Data;
 
 
-public static class TheoryData
+public static class TestData
 {
     public static IEnumerable<object[]> TypeToFuncMap =>
     [
