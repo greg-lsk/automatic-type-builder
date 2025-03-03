@@ -125,7 +125,7 @@ public class FieldAssignmentLogicTests
         assignmentLogic.When(Guid.NewGuid);
         assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
 
-        Assert.All(actualTypes, t => Assert.Contains(t, registeredTypes));                           
+        Assert.All(actualTypes, t => Assert.Contains(t, registeredTypes));
     }
 
     [Fact]
@@ -165,17 +165,7 @@ public class FieldAssignmentLogicTests
     private static void DefaultAssignmentLogicSetup(in Mock<IDefault> defaultMock,
                                                     out IFieldAssignmentLogic defaultAssignmentLogic)
     {
-        defaultMock.Setup(m => m.AssignmentLogic).Returns(new ReadOnlyDictionary<Type, Delegate>
-        (
-            new Dictionary<Type, Delegate>
-            {
-                {typeof(int), () => Constant.IntValue},
-                {typeof(string), () => Constant.StringValue},
-            }
-        ));
-
+        defaultMock.Setup(m => m.AssignmentLogic).Returns(TestData.DefaultAssignmentLogic);
         defaultAssignmentLogic = new FieldAssignmentLogic(defaultMock.Object);
-    }
-
-    
+    }   
 }
