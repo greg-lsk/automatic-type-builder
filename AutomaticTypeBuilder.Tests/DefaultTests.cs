@@ -1,4 +1,5 @@
 using AutomaticTypeBuilder.Internals.Concrete;
+using AutomaticTypeBuilder.Tests.Data;
 
 namespace AutomaticTypeBuilder.Tests;
 
@@ -6,7 +7,7 @@ namespace AutomaticTypeBuilder.Tests;
 public class DefaultTests
 {
     [Theory]
-    [MemberData(nameof(InitLogicMap))]       
+    [MemberData(nameof(Data.Data.TypeToFuncMap))]       
     public void AssignmentLogic_Returns_CorrectDelegates(Type key, Type expectedType)
     {
         var _defaultInitLogic = new Default().AssignmentLogic;
@@ -23,29 +24,4 @@ public class DefaultTests
 
         Assert.Equal(expected:defaultInitLogic.Count, actual:InitLogicMap.Count());
     }
-
-    public static IEnumerable<object[]> InitLogicMap =>
-    [
-        [typeof(int), typeof(Func<int>)],
-        [typeof(uint), typeof(Func<uint>)],
-        [typeof(long), typeof(Func<long>)],
-        [typeof(ulong), typeof(Func<ulong>)],
-        [typeof(float), typeof(Func<float>)],
-        [typeof(short), typeof(Func<short>)],
-        [typeof(ushort), typeof(Func<ushort>)],
-        [typeof(double), typeof(Func<double>)],
-        [typeof(decimal), typeof(Func<decimal>)],
-
-        [typeof(bool), typeof(Func<bool>)],
-
-        [typeof(byte), typeof(Func<byte>)],
-        [typeof(sbyte), typeof(Func<sbyte>)],
-
-        [typeof(char), typeof(Func<char>)],
-        [typeof(string), typeof(Func<string>)],
-
-        [typeof(Guid), typeof(Func<Guid>)],
-        [typeof(TimeSpan), typeof(Func<TimeSpan>)],
-        [typeof(DateTime), typeof(Func<DateTime>)]
-    ];
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutomaticTypeBuilder.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de6d9576e57a0d624bf04fb4b6a39d14c6f9f3a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+570040f6d4ee53d99a5db05c6afd5134269f44c3")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutomaticTypeBuilder.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutomaticTypeBuilder.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
