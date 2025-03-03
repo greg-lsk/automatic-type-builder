@@ -29,11 +29,11 @@ public class InstantiationTests
         var instantiation = new Instantiation();
 
         var del = instantiation.For<InstantiationTestDummyClass>(instantionDataMock.Object);
-        del(out var delegateResult);
+        var delegateResult = del();
            
-        object?[] actualTypes = [delegateResult.Field01, delegateResult.Field02, delegateResult.Field03];
+        object?[] actualValues = [delegateResult.Field01, delegateResult.Field02, delegateResult.Field03];
 
-        Assert.Equal(expected: InstantiationTestsData.DummyClassFieldTypes, actual:actualTypes); 
+        Assert.Equal(expected: InstantiationTestsData.DummyClassAssignedValues, actual:actualValues); 
     }    
 
 
@@ -44,7 +44,7 @@ public class InstantiationTests
 
     private static void InstantiationDataMockCollectionsSetup(in Mock<IInstantiationData> instantionDataMock)
     {
-        instantionDataMock.Setup(m => m.Types).Returns(InstantiationTestsData.DummyClassFieldTypes);
         instantionDataMock.Setup(m => m.Values).Returns(InstantiationTestsData.DummyClassAssignedValues);
+        instantionDataMock.Setup(m => m.Types).Returns(InstantiationTestsData.DummyClassFieldTypes);
     }
 }

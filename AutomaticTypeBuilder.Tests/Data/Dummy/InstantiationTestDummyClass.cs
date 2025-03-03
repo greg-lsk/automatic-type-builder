@@ -8,5 +8,7 @@ namespace AutomaticTypeBuilder.Tests.Data.Dummy;
     internal Guid Field03 {get;} = arg03;
 
     internal static IEnumerable<Type> FieldTypeBlueprint() => [typeof(int), typeof(string), typeof(Guid)];
-    internal static IEnumerable<object?> FieldAssignedValues() => [42, "Dummy-Class", Guid.NewGuid()];
+    internal static IEnumerable<object?> FieldAssignedValues() => [42, "Dummy-Class", _testGuid];
+
+    private static readonly Guid _testGuid = Guid.NewGuid();
 }

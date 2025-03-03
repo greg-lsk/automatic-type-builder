@@ -1,7 +1,7 @@
 namespace AutomaticTypeBuilder;
 
 
-public delegate void Instantiate<T>(out T instance);
+public delegate T Instantiate<T>();
 
 public interface IInstantiation
 {
