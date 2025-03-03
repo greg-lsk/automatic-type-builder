@@ -16,7 +16,8 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void When_RegistersCorrectly_TheAssignmentLogic()
     {
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
 
         var assignedGuid = Guid.NewGuid();
         assignmentLogic.When(() => assignedGuid);
@@ -28,10 +29,11 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void When_Overrides_DefaultAssignmentLogic_WithCustom()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
+
         var customAssignedInt = 7;
         int customIntAssignment() => customAssignedInt;
-
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
 
         assignmentLogic.When(customIntAssignment);
         var actualInt = assignmentLogic.Initialize<int>();
@@ -42,13 +44,14 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void When_DoesNotOverride_AlreadyOverriden_Logic()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);        
+
         var customAssignedInt = 7;
         int customIntAssignment() => customAssignedInt;
 
         var customReassignedInt = customAssignedInt * 2;
         int customIntReassignment() => customReassignedInt;        
-
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
 
         assignmentLogic.When(customIntAssignment);
         assignmentLogic.When(customIntReassignment);        
@@ -60,7 +63,8 @@ public class FieldAssignmentLogicTests
     [Fact]    
     public void Initialize_Returns_Correctly_For_DefaultRegistedType()
     {
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
 
         var actualIntValue = assignmentLogic.Initialize<int>();
         var actualStringValue = assignmentLogic.Initialize<string>();
@@ -72,7 +76,8 @@ public class FieldAssignmentLogicTests
     [Fact]    
     public void Initialize_Returns_DefaultValue_For_UnregistedType()
     {
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
 
         var actualGuidValue = assignmentLogic.Initialize<Guid>();
 
@@ -84,7 +89,8 @@ public class FieldAssignmentLogicTests
     public void InitializeCorrectlyFillsTheValuesToCollection(IEnumerable<Type> providedTypes,
                                                               IEnumerable<object?> expectedValues)
     {
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
 
         assignmentLogic.Initialize(in providedTypes, out var values);
 
@@ -94,8 +100,10 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void Initialize_Correctly_Sets_TheFieldNumber()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
+
         var fieldLimit = 5;
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
 
         assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
         var actualTypesCount = actualTypes.Count();
@@ -108,8 +116,10 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void Initialize_OnlySetsTypes_FromRegistered()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
+
         var fieldLimit = 5;
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
         IEnumerable<Type> registeredTypes = [typeof(int), typeof(string), typeof(Guid)];  
     
         assignmentLogic.When(Guid.NewGuid);
@@ -121,8 +131,10 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void Initialize_SetsValues_OfCorrectTypes()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
+
         var fieldLimit = 5;
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
         IEnumerable<Type> registeredTypes = [typeof(int), typeof(string), typeof(Guid)];  
     
         assignmentLogic.When(Guid.NewGuid);
@@ -134,8 +146,10 @@ public class FieldAssignmentLogicTests
     [Fact]
     public void Initialize_ThrowsInvalidDataException_WithNegativeFieldCount()
     {
+        DefaultMock(out var defaultMock);
+        DefaultAssignmentLogicSetup(in defaultMock, out var assignmentLogic);
+
         var fieldLimit = -5;
-        DefaultAssignmentLogicSetup(out var defaultMock, out var assignmentLogic);
     
         void act() => assignmentLogic.Initialize(fieldLimit, out var actualValues, out var actualTypes);
 
@@ -143,21 +157,25 @@ public class FieldAssignmentLogicTests
     }    
   
 
-    private static void DefaultAssignmentLogicSetup(out Mock<IDefault> defaultMock,
-                                                    out IFieldAssignmentLogic defaultAssignmentLogic)
+    private static void DefaultMock(out Mock<IDefault> defaultMock)
     {
-        defaultMock = new Mock<IDefault>();
-        DefaultAssignmentLogicSetup(in defaultMock);
-        defaultAssignmentLogic = new FieldAssignmentLogic(defaultMock.Object);            
+        defaultMock = new Mock<IDefault>();            
     }
 
-    private static void DefaultAssignmentLogicSetup(in Mock<IDefault> defaultMock) 
-    => defaultMock.Setup(m => m.AssignmentLogic).Returns(new ReadOnlyDictionary<Type, Delegate>
-    (
-        new Dictionary<Type, Delegate>
-        {
-            {typeof(int), () => Constant.IntValue},
-            {typeof(string), () => Constant.StringValue},
-        }
-    ));    
+    private static void DefaultAssignmentLogicSetup(in Mock<IDefault> defaultMock,
+                                                    out IFieldAssignmentLogic defaultAssignmentLogic)
+    {
+        defaultMock.Setup(m => m.AssignmentLogic).Returns(new ReadOnlyDictionary<Type, Delegate>
+        (
+            new Dictionary<Type, Delegate>
+            {
+                {typeof(int), () => Constant.IntValue},
+                {typeof(string), () => Constant.StringValue},
+            }
+        ));
+
+        defaultAssignmentLogic = new FieldAssignmentLogic(defaultMock.Object);
+    }
+
+    
 }
