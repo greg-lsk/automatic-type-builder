@@ -4,7 +4,7 @@ using AutomaticTypeBuilder.Tests.Data.Dummy;
 namespace AutomaticTypeBuilder.Tests.Data;
 
 
-internal static class FieldAssignmentLogicTestsData
+internal static class AssignmentLogicTestsData
 {
     internal static ReadOnlyDictionary<Type, Delegate> DefaultLogic => new
     (

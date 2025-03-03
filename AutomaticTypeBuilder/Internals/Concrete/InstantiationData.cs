@@ -10,11 +10,11 @@ internal class InstantiationData: IInstantiationData
     public IEnumerable<object?> Values => _values;
 
 
-    public InstantiationData(IFieldAssignmentLogic assignmentLogic, int fieldCount = 5)
+    public InstantiationData(IAssignmentLogic assignmentLogic, int fieldCount = 5)
     {
         if(fieldCount < 0) throw new InvalidDataException();
 
-        assignmentLogic.Initialize(fieldCount, out _values, out _types);
+        assignmentLogic.AssignRandomBatch(fieldCount, out _values, out _types);
     }
 
 

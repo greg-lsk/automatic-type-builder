@@ -87,11 +87,11 @@ public class InstantiationDataTests
     }
 
 
-    private static void MockAssignmentLogicSetup(out Mock<IFieldAssignmentLogic> mockedAssignmentLogic,
+    private static void MockAssignmentLogicSetup(out Mock<IAssignmentLogic> mockedAssignmentLogic,
                                                  int fieldCount = 5)
     {
-        mockedAssignmentLogic = new Mock<IFieldAssignmentLogic>();
-        mockedAssignmentLogic.Setup(m => m.Initialize(fieldCount, out _expectedInitializedValues, out _expectedInitializedTypes))
+        mockedAssignmentLogic = new Mock<IAssignmentLogic>();
+        mockedAssignmentLogic.Setup(m => m.AssignRandomBatch(fieldCount, out _expectedInitializedValues, out _expectedInitializedTypes))
                              .Callback((int s, out IEnumerable<object?> assignedValues, out IEnumerable<Type> providedTypes) => 
                              {
                                 assignedValues = _expectedInitializedValues;
