@@ -1,5 +1,4 @@
 using Moq;
-using System.Collections.ObjectModel;
 using AutomaticTypeBuilder.Tests.Data;
 using AutomaticTypeBuilder.Internals.Abstract;
 using AutomaticTypeBuilder.Internals.Concrete;
@@ -69,8 +68,8 @@ public class FieldAssignmentLogicTests
         var actualIntValue = assignmentLogic.Initialize<int>();
         var actualStringValue = assignmentLogic.Initialize<string>();
 
-        Assert.Equal(expected:Constant.IntValue, actual:actualIntValue);
-        Assert.Equal(expected:Constant.StringValue, actual:actualStringValue);        
+        Assert.Equal(expected:Defaults.IntValue, actual:actualIntValue);
+        Assert.Equal(expected:Defaults.StringValue, actual:actualStringValue);        
     }
 
     [Fact]    
