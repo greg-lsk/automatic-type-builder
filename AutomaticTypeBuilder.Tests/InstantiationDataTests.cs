@@ -6,6 +6,8 @@ namespace AutomaticTypeBuilder.Tests;
 
 public class InstantiationDataTests
 {
+    private static readonly int _mockFieldCount = 2; 
+    
     private static IEnumerable<Type> _mockedTypes = [typeof(int), typeof(string)];
     private static IEnumerable<object?> _mockedValues = [42, "Hellow"];
 
@@ -13,8 +15,8 @@ public class InstantiationDataTests
     [Fact]
     public void Ctor_Correctly_Initializes_Values()
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
         Assert.Equal(expected:_mockedValues, actual:instantiationData.Values);
     }
@@ -22,8 +24,8 @@ public class InstantiationDataTests
     [Fact]
     public void Ctor_Correctly_Initializes_Types()
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
         Assert.Equal(expected:_mockedTypes, actual:instantiationData.Types);
     }
@@ -32,7 +34,7 @@ public class InstantiationDataTests
     public void Ctor_ThrowsInvalidDataException_WithNegativeFieldCount()
     {
         MockAssignmentLogicSetup(out var mockedAssignmentLogic);
-        InstantiationData act() => new(mockedAssignmentLogic.Object, -5);
+        InstantiationData act() => new(mockedAssignmentLogic.Object, -_mockFieldCount);
 
         Assert.Throws<InvalidDataException>(act);
     }    
@@ -40,19 +42,18 @@ public class InstantiationDataTests
     [Fact]
     public void Count_Correctly_Returs_NumberOfFields()
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
         Assert.Equal(expected:_mockedTypes.Count(), actual:instantiationData.FieldCount);
     }
 
     [Theory]
-    [InlineData(0, typeof(int), 42)]
-    [InlineData(1, typeof(string), "Hellow")]
+    [MemberData(nameof(DataAtIndex))]
     public void DataAt_Correctly_Returts_FieldInfo_FromIndex(int index, Type expectedType, object? expectedValue)
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
         var actualInfo = instantiationData.DataAt(index);
         
@@ -63,10 +64,10 @@ public class InstantiationDataTests
     [Fact]        
     public void DataAt_IndexOutOfRangeException_WithNegative_IndexProvided()
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
-        void act() => instantiationData.DataAt(-5);
+        void act() => instantiationData.DataAt(-_mockFieldCount);
         
         Assert.Throws<IndexOutOfRangeException>(act);        
     }
@@ -74,10 +75,10 @@ public class InstantiationDataTests
     [Fact]        
     public void DataAt_IndexOutOfRangeException_WithGreaterThatCapacity_IndexProvided()
     {
-        MockAssignmentLogicSetup(out var mockedAssignmentLogic, 2);
-        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, 2);
+        MockAssignmentLogicSetup(out var mockedAssignmentLogic, _mockFieldCount);
+        var instantiationData = new InstantiationData(mockedAssignmentLogic.Object, _mockFieldCount);
 
-        void act() => instantiationData.DataAt(instantiationData.FieldCount+5);
+        void act() => instantiationData.DataAt(instantiationData.FieldCount*2);
         
         Assert.Throws<IndexOutOfRangeException>(act);        
     }
@@ -94,4 +95,10 @@ public class InstantiationDataTests
                                 providedTypes = _mockedTypes;                                
                              });
     }
+
+    public static TheoryData<int, Type, object?> DataAtIndex = new()
+    {
+        {0, _mockedTypes.ElementAt(0), _mockedValues.ElementAt(0)},
+        {1, _mockedTypes.ElementAt(1), _mockedValues.ElementAt(1)}
+    };
 }
