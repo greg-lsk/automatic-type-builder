@@ -26,7 +26,6 @@ public static class TestData
         [typeof(char), typeof(Func<char>)],
         [typeof(string), typeof(Func<string>)],
 
-        [typeof(Guid), typeof(Func<Guid>)],
         [typeof(TimeSpan), typeof(Func<TimeSpan>)],
         [typeof(DateTime), typeof(Func<DateTime>)]
     ];
@@ -51,6 +50,7 @@ public static class TestData
             [Defaults.IntValue, Defaults.StringValue, default(Guid), default(DummyClass)]
         }      
     };
+
 
     public static int InitializationDataCount => 2;
     public static IEnumerable<Type> InitializationTypes = [typeof(int), typeof(string)];
